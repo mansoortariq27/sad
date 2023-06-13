@@ -137,6 +137,7 @@ import numpy as np
 #Activation functions and their derivatives
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
+  
 #Activation functions and their derivatives
 def sigmoid_derivative(x):
     return x * (1 - x)
@@ -154,6 +155,7 @@ b1 = np.zeros(hidden_nodes)
 
 W2 = np.random.randn(hidden_nodes, output_nodes)
 b2 = np.zeros(output_nodes)
+
 #Training loop
 for epoch in range(epochs):
     # Forward propagation
@@ -176,6 +178,7 @@ for epoch in range(epochs):
         loss = np.mean(np.square(output_error))
         print(f"Epoch {epoch}, Loss: {loss:.5f}")
 '''
+
 mlpi='''
 import tensorflow as tf
 from tensorflow import keras
