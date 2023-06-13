@@ -47,20 +47,22 @@ from sklearn.neural_network import MLPClassifier
 '''
 ga='''
 
-# Function to generate a chromosome of length n
+Function to generate a chromosome of length n
 def generate_chromosome(n):
     chromosome = []
     for i in range(n):
         chromosome.append(random.randint(0, n-1))
     return chromosome
-# Function to generate an initial population of size pop_size, where each chromosome has length n
+    
+Function to generate an initial population of size pop_size, where each chromosome has length n
 def initial_population(pop_size, n):
     population = []
     for i in range(pop_size):
         chromosome = generate_chromosome(n)
         population.append(chromosome)
     return population
-# Function to compute the fitness score of a given chromosome
+    
+Function to compute the fitness score of a given chromosome
 def fitness(chromosome):
     n = len(chromosome)
     attacks = 0
@@ -72,7 +74,8 @@ def fitness(chromosome):
                 attacks += 1
     fitness_score = n*(n-1)/2 - attacks  # Calculate fitness score based on number of conflicts
     return fitness_score
-# Function to perform tournament selection on a given population
+    
+Function to perform tournament selection on a given population
 def selection(population, tournament_size):
     tournament = random.sample(population, tournament_size)  # Choose tournament_size chromosomes at random
     fittest = tournament[0]
@@ -80,20 +83,23 @@ def selection(population, tournament_size):
         if fitness(tournament[i]) > fitness(fittest):
             fittest = tournament[i]
     return fittest
-# Function to perform crossover between two parent chromosomes
+    
+#Function to perform crossover between two parent chromosomes
 def crossover(parent1, parent2):
     n = len(parent1)
     crossover_point = random.randint(1, n-1)  # Choose a random crossover point
     child = parent1[:crossover_point] + parent2[crossover_point:]  # Create child by combining parent segments
     return child
-# Function to perform mutation on a given chromosome with a given probability
+    
+#Function to perform mutation on a given chromosome with a given probability
 def mutation(chromosome, mutation_rate):
     n = len(chromosome)
     for i in range(n):
         if random.random() < mutation_rate:  # Perform mutation with probability mutation_rate
             chromosome[i] = random.randint(0, n-1)  # Choose a new random value for the gene
     return chromosome
-# Function to convert a chromosome to a string representation of a chessboard
+    
+#Function to convert a chromosome to a string representation of a chessboard
 def chromosome_to_board(chromosome):
     n = len(chromosome)
     board = []
@@ -104,7 +110,7 @@ def chromosome_to_board(chromosome):
     return "
 ".join(board)
 
-# Function to perform a genetic algorithm to solve the N-Queens problem
+#Function to perform a genetic algorithm to solve the N-Queens problem
 def genetic_algorithm(pop_size, n, tournament_size, mutation_rate, num_generations):
     population = initial_population(pop_size, n)  # Initialize population
     for i in range(num_generations):
