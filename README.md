@@ -1,25 +1,23 @@
 start here
 names='''
-
- help
- outliers
- pca
- one_hot
- label
- perceptron_learning
- mlp
- kmeanM
- kmeanS
- maze
- pre-processing
- mlpi
+help
+outliers
+pca
+one_hot
+label
+perceptron_learning
+mlp
+kmeanM
+kmeanS
+maze
+processing
+mlpi
 mlp_bp
 ga
 libraries
- 
+regressionS
 '''
 libraries='''
-
 from sklearn import cluster, datasets, mixture
 import cv2
 from PIL import Image
@@ -46,7 +44,6 @@ import os
 from sklearn.preprocessing import LabelEncoder
 import random
 from sklearn.neural_network import MLPClassifier
-
 '''
 ga='''
 # Function to generate a chromosome of length n
@@ -55,7 +52,6 @@ def generate_chromosome(n):
     for i in range(n):
         chromosome.append(random.randint(0, n-1))
     return chromosome
-
 # Function to generate an initial population of size pop_size, where each chromosome has length n
 def initial_population(pop_size, n):
     population = []
@@ -75,7 +71,6 @@ def fitness(chromosome):
                 attacks += 1
     fitness_score = n*(n-1)/2 - attacks  # Calculate fitness score based on number of conflicts
     return fitness_score
-
 # Function to perform tournament selection on a given population
 def selection(population, tournament_size):
     tournament = random.sample(population, tournament_size)  # Choose tournament_size chromosomes at random
@@ -160,7 +155,6 @@ b1 = np.zeros(hidden_nodes)
 W2 = np.random.randn(hidden_nodes, output_nodes)
 b2 = np.zeros(output_nodes)
 
-
 # Training loop
 for epoch in range(epochs):
     # Forward propagation
@@ -188,9 +182,6 @@ for epoch in range(epochs):
     if epoch % 100 == 0:
         loss = np.mean(np.square(output_error))
         print(f"Epoch {epoch}, Loss: {loss:.5f}")
-
-
- 
 '''
 mlpi='''
 
@@ -360,19 +351,14 @@ plt.ylabel('True Positive Rate')
 plt.title('ROC curve')
 plt.legend()
 plt.show()
-
-
 '''
 help='''
-
 def give(x):
     for i in x:
+        i=re.sub(r'<.*>','',i)
         print(i)
        
-give(np.last['pre'].split('
-'))
-
-
+give(np.last['pre'].split('\n'))
 '''
 outliers='''
 
@@ -384,7 +370,6 @@ outliers='''
   #remove outliers
   df = df[~((df < (Q1 - 1.5 * IQR)) |(df > (Q3 + 1.5 * IQR))).any(axis=1)]
   df
-
 
   #check for outliers using z-score
   from scipy import stats
@@ -425,7 +410,6 @@ one_hot='''
 
   #concatenate the two dataframes : df_dummies, df_numeric
   df_new = pd.concat([df_dummies, df_numeric], axis=1)
- 
 '''
 label='''
 
@@ -442,7 +426,6 @@ label='''
 
   #concatenate the two dataframes : df_dummies, df_numeric
   df_new = pd.concat([df_dummies, df_numeric], axis=1)
- 
 '''
 betaG='''
 
@@ -906,7 +889,6 @@ def main2():
 
 main2()
 
- 
 '''
 kmeanM='''
 
@@ -997,9 +979,6 @@ regressionS='''
   plt.xlabel('Actual')
   plt.ylabel('Predicted')
   plt.show()
-
-
- 
 '''
 kmeanS='''
 
@@ -1056,9 +1035,7 @@ class KMeans:
   plt.title('K-Mean Clustering')
   plt.xlabel('X axis')
   plt.ylabel('Y axis')
-  plt.show()
-
- 
+  plt.show() 
 '''
 mlp='''
 
@@ -1101,8 +1078,6 @@ mlp='''
 
   print("Best MLPClassifier:", best_mlp)
   print("Accuracy:", accuracy)
-
- 
 '''
 perceptron_learning='''
 
@@ -1143,14 +1118,9 @@ perceptron_learning='''
 
   # Print the expected output and the actual output side by side
   print("Expected Output: ", Y)
-  print("Actual Output:", actual_output)
-
- 
+  print("Actual Output:", actual_output) 
 '''
 processing='''
-
-
- 
   #find the missing values
   df.isnull().sum()
 
@@ -1175,41 +1145,25 @@ processing='''
 
   #fill the categorical missing values with the mode of the column
   df = df.fillna(df.mode().iloc[0])
-
-
 # Clean the dataset.
-
   df=df.drop(['price'], axis=1)
-
 #Removing zero rows
 remove_all_zero_rows=df.iloc[:, 2:62].dropna(how='all')
 remove_all_zero_rows
-
 idx = df.index
-
 # Remove rows with corresponding indices from columns 1, 2, and 64
 df = df.drop(index=idx.difference(remove_all_zero_rows.index))
-
 # Fill missing values with column means
 df = df.fillna(df.mean())
-
 # Update the original dataframe with the cleaned subset
 df
-
-
 # 3. Convert labels into 0 or 1
-
 df.loc[df['calc_position'] ==1, 'calc_position'] = 1
 df.loc[df['calc_position'] >1, 'calc_position'] = 0
 df
-
-
 # 4. Plot statistics to perform exploratory data analysis.
-df.describe
-
-df.info
-
-
+df.describe()
+df.info()
 # Histogram of a numerical column
 plt.hist(df.iloc[:, 2:])
 plt.title('Histogram of column_name')
@@ -1217,19 +1171,13 @@ plt.xlabel('Value')
 plt.ylabel('Frequency')
 plt.show()
 
-
-
-
 # Correlation heatmap
 sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
 plt.title('Correlation Heatmap')
 plt.show()
 
-
-
 race_id_ = pd.get_dummies(df, columns = ['race_id'])
 race_id_
-
 
 df['Date'] = pd.to_datetime(df['Date'])
 df['Date'] = df['Date'].astype(np.int64)
