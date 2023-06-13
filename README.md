@@ -444,7 +444,7 @@ label='''
   df_new = pd.concat([df_dummies, df_numeric], axis=1)
  
 '''
-alpha-betaG='''
+betaG='''
 
 #  Tic Tac Toe Player
   import copy
