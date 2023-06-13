@@ -354,7 +354,7 @@ plt.show()
 
 
 '''
-help='''
+give='''
 
 def give(x):
     for i in x:
