@@ -46,6 +46,7 @@ import random
 from sklearn.neural_network import MLPClassifier
 '''
 ga='''
+
 #Function to generate a chromosome of length n
 def generate_chromosome(n):
     chromosome = []
@@ -130,6 +131,7 @@ print("Best solution found:")
 print(best_solution)
 print("Corresponding board:")
 print(best_board)
+
 '''
 mlp_bp='''
 import numpy as np
