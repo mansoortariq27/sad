@@ -17,10 +17,8 @@ names='''
 mlp_bp
 ga
 libraries
- 
 '''
 libraries='''
-
 from sklearn import cluster, datasets, mixture
 import cv2
 from PIL import Image
@@ -47,19 +45,14 @@ import os
 from sklearn.preprocessing import LabelEncoder
 import random
 from sklearn.neural_network import MLPClassifier
-
 '''
 ga='''
-
-
-# Function to generate a chromosome of length n
 def generate_chromosome(n):
     chromosome = []
     for i in range(n):
         chromosome.append(random.randint(0, n-1))
     return chromosome
 
-# Function to generate an initial population of size pop_size, where each chromosome has length n
 def initial_population(pop_size, n):
     population = []
     for i in range(pop_size):
