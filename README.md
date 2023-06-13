@@ -103,7 +103,6 @@ def chromosome_to_board(chromosome):
     return "
 ".join(board)
 
-
 # Function to perform a genetic algorithm to solve the N-Queens problem
 def genetic_algorithm(pop_size, n, tournament_size, mutation_rate, num_generations):
     population = initial_population(pop_size, n)  # Initialize population
@@ -131,16 +130,10 @@ print("Best solution found:")
 print(best_solution)
 print("Corresponding board:")
 print(best_board)
-
-
- 
 '''
 mlp_bp='''
 
-
-
 import numpy as np
-
 # Activation functions and their derivatives
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -189,10 +182,7 @@ for epoch in range(epochs):
     # Print loss every 100 epochs
     if epoch % 100 == 0:
         loss = np.mean(np.square(output_error))
-        print(f"Epoch {epoch}, Loss: {loss:.5f}")
-
-
- 
+        print(f"Epoch {epoch}, Loss: {loss:.5f}") 
 '''
 mlpi='''
 
@@ -202,7 +192,6 @@ import numpy as np
 import os
 import cv2
 from sklearn.model_selection import train_test_split
-
 # Load dataset
 data_dir = "/content/drive/MyDrive/Colab Notebooks/AI/flowers"
 categories = os.listdir(data_dir)
@@ -446,7 +435,7 @@ label='''
   df_new = pd.concat([df_dummies, df_numeric], axis=1)
  
 '''
-alpha-betaG='''
+betaG='''
 
 #  Tic Tac Toe Player
   import copy
