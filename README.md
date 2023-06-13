@@ -154,62 +154,49 @@ b1 = np.zeros(hidden_nodes)
 
 W2 = np.random.randn(hidden_nodes, output_nodes)
 b2 = np.zeros(output_nodes)
-
 #Training loop
 for epoch in range(epochs):
     # Forward propagation
     hidden_layer_input = np.dot(x, W1) + b1
     hidden_layer_output = sigmoid(hidden_layer_input)
-
     output_layer_input = np.dot(hidden_layer_output, W2) + b2
     output_layer_output = sigmoid(output_layer_input)
-
     # Backward propagation
     output_error = y - output_layer_output
     output_delta = output_error * sigmoid_derivative(output_layer_output)
-
     hidden_error = np.dot(output_delta, W2.T)
     hidden_delta = hidden_error * sigmoid_derivative(hidden_layer_output)
-
     # Update weights and biases
     W2 += np.dot(hidden_layer_output.T, output_delta) * learning_rate
     b2 += np.sum(output_delta, axis=0) * learning_rate
-
     W1 += np.dot(x.T, hidden_delta) * learning_rate
     b1 += np.sum(hidden_delta, axis=0) * learning_rate
-
     # Print loss every 100 epochs
     if epoch % 100 == 0:
         loss = np.mean(np.square(output_error))
         print(f"Epoch {epoch}, Loss: {loss:.5f}")
 '''
 mlpi='''
-
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 import os
 import cv2
 from sklearn.model_selection import train_test_split
-
 #Load dataset
 data_dir = "/content/drive/MyDrive/Colab Notebooks/AI/flowers"
 categories = os.listdir(data_dir)
 labels = [i for i in range(len(categories))]
 label_dict = dict(zip(categories, labels))
-
 img_size = 128
 data = []
 target = []
-
 for category in categories:
     folder_path = os.path.join(data_dir, category)
     img_names = os.listdir(folder_path)
-
     for img_name in img_names:
         img_path = os.path.join(folder_path, img_name)
         img = cv2.imread(img_path)
-
         try:
             # Convert the image into grayscale
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
