@@ -5,7 +5,7 @@ names='''
 ?pca,
 ?one_hot,
 ?label,
-?alpha-betaG,
+?betaG,
 ?perceptron_learning,
 ?mlp,
 ?regressionS,
@@ -16,7 +16,236 @@ names='''
 ?bfs,
 ?dfs,
 ?pre-processing
+?gatsb
 ?
+'''
+gatsp='''
+
+import random
+import numpy as np
+
+#Function to generate a chromosome as a permutation of integers from 1 to n
+def generate_chromosome(n):
+????chromosome = list(range(1, n+1))
+????random.shuffle(chromosome)
+????return chromosome
+
+#Function to generate an initial population of size pop_size, where each chromosome has length n
+def initial_population(pop_size, n):
+????population = []
+????for _ in range(pop_size):
+????????chromosome = generate_chromosome(n)
+????????population.append(chromosome)
+????return population
+
+#Function to compute the fitness score of a given chromosome
+def fitness(chromosome, distance_matrix):
+????total_distance = 0
+????n = len(chromosome)
+????for i in range(n):
+????????current_city = chromosome[i]
+????????next_city = chromosome[(i + 1) % n]  # Wrap around to the first city
+????????total_distance += distance_matrix[current_city - 1][next_city - 1]  # Adjust indices to start from 0
+????return -total_distance
+
+#Function to perform tournament selection on a given population
+def selection(population, tournament_size):
+????tournament = random.sample(population, tournament_size)
+????fittest = tournament[0]
+????for i in range(1, tournament_size):
+????????if fitness(tournament[i], distance_matrix) > fitness(fittest, distance_matrix):
+????????????fittest = tournament[i]
+????return fittest
+
+#Function to perform ordered crossover between two parent chromosomes
+def crossover(parent1, parent2):
+????n = len(parent1)
+????start_index = random.randint(0, n-1)
+????end_index = random.randint(start_index+1, n)
+????child = [-1] * n
+????child[start_index:end_index] = parent1[start_index:end_index]
+????
+????# Fill in the remaining positions with genes from parent2
+????parent2_index = 0
+????for i in range(n):
+????????if child[i] == -1:
+????????????while parent2[parent2_index] in child:
+????????????????parent2_index += 1
+????????????child[i] = parent2[parent2_index]
+????????????parent2_index += 1
+????return child
+
+#Function to perform mutation on a given chromosome with a given probability
+def mutation(chromosome, mutation_rate):
+????n = len(chromosome)
+????for i in range(n):
+????????if random.random() < mutation_rate:
+????????????j = random.randint(0, n-1)
+????????????chromosome[i], chromosome[j] = chromosome[j], chromosome[i]
+????return chromosome
+
+#Function to convert a chromosome to a string representation of the cities visited
+def chromosome_to_route(chromosome):
+????return ' -> '.join(map(str, chromosome))
+
+#Function to perform a genetic algorithm to solve the Traveling Salesman Problem
+def genetic_algorithm(pop_size, n, tournament_size, mutation_rate, num_generations, distance_matrix):
+????population = initial_population(pop_size, n)
+????best_fitness = float('-inf')
+????best_chromosome = None
+????for _ in range(num_generations):
+????????fitness_scores = [fitness(chromosome, distance_matrix) for chromosome in population]
+????????max_fitness = max(fitness_scores)
+????????if max_fitness > best_fitness:
+????????????best_fitness = max_fitness
+????????????best_chromosome = population[fitness_scores.index(max_fitness)]
+????????new_population = []
+????????for _ in range(pop_size):
+????????????parent1 = selection(population, tournament_size)
+????????????parent2 = selection(population, tournament_size)
+????????????child = crossover(parent1, parent2)
+????????????child = mutation(child, mutation_rate)
+????????????new_population.append(child)
+????????population = new_population
+????best_route = chromosome_to_route(best_chromosome)
+????return best_chromosome, best_route
+
+#Example usage
+n = 5
+distance_matrix = np.array([
+????[0, 2, 9, 10, 1],
+????[2, 0, 6, 4, 8],
+????[9, 6, 0, 3, 7],
+????[10, 4, 3, 0, 5],
+????[1, 8, 7, 5, 0]
+])
+
+best_solution, best_route = genetic_algorithm(pop_size=50, n=n, tournament_size=5, mutation_rate=0.05, num_generations=100, distance_matrix=distance_matrix)
+
+print("Best solution found:")
+print(best_solution)
+print("Best route:")
+print(best_route)
+
+'''
+libraries='''
+
+from sklearn import cluster, datasets, mixture
+import cv2
+from PIL import Image
+from sklearn.metrics import mean_absolute_error,mean_squared_error
+from sklearn.preprocessing import StandardScaler
+import copy
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import math
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from tensorflow import keras
+from sklearn.linear_model import LinearRegression
+from scipy.spatial import distance
+import seaborn as sns
+from sklearn.metrics import roc_curve, auc
+from sklearn.datasets import make_classification
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from sklearn.datasets import make_blobs
+import os
+from sklearn.preprocessing import LabelEncoder
+import random
+from sklearn.neural_network import MLPClassifier
+
+'''
+ga='''
+# Function to generate a chromosome of length n
+def generate_chromosome(n):
+????chromosome = []
+????for i in range(n):
+????????chromosome.append(random.randint(0, n-1))
+????return chromosome
+
+# Function to generate an initial population of size pop_size, where each chromosome has length n
+def initial_population(pop_size, n):
+????population = []
+????for i in range(pop_size):
+????????chromosome = generate_chromosome(n)
+????????population.append(chromosome)
+????return population
+# Function to compute the fitness score of a given chromosome
+def fitness(chromosome):
+????n = len(chromosome)
+????attacks = 0
+????for i in range(n):
+????????for j in range(i+1, n):
+????????????if chromosome[i] == chromosome[j]:  # Check for row conflicts
+????????????????attacks += 1
+????????????elif abs(chromosome[i] - chromosome[j]) == abs(i - j):  # Check for diagonal conflicts
+????????????????attacks += 1
+????fitness_score = n*(n-1)/2 - attacks  # Calculate fitness score based on number of conflicts
+????return fitness_score
+
+# Function to perform tournament selection on a given population
+def selection(population, tournament_size):
+????tournament = random.sample(population, tournament_size)  # Choose tournament_size chromosomes at random
+????fittest = tournament[0]
+????for i in range(1, tournament_size):  # Iterate over remaining chromosomes to find fittest
+????????if fitness(tournament[i]) > fitness(fittest):
+????????????fittest = tournament[i]
+????return fittest
+# Function to perform crossover between two parent chromosomes
+def crossover(parent1, parent2):
+????n = len(parent1)
+????crossover_point = random.randint(1, n-1)  # Choose a random crossover point
+????child = parent1[:crossover_point] + parent2[crossover_point:]  # Create child by combining parent segments
+????return child
+# Function to perform mutation on a given chromosome with a given probability
+def mutation(chromosome, mutation_rate):
+????n = len(chromosome)
+????for i in range(n):
+????????if random.random() < mutation_rate:  # Perform mutation with probability mutation_rate
+????????????chromosome[i] = random.randint(0, n-1)  # Choose a new random value for the gene
+????return chromosome
+# Function to convert a chromosome to a string representation of a chessboard
+def chromosome_to_board(chromosome):
+????n = len(chromosome)
+????board = []
+????for i in range(n):
+????????row = ["x"] * n
+????????row[chromosome[i]] = "Q"  # Place a queen at the position specified by the gene
+????????board.append(" ".join(row))
+????return "
+".join(board)
+
+
+# Function to perform a genetic algorithm to solve the N-Queens problem
+def genetic_algorithm(pop_size, n, tournament_size, mutation_rate, num_generations):
+????population = initial_population(pop_size, n)  # Initialize population
+????for i in range(num_generations):
+????????fitness_scores = [fitness(chromosome) for chromosome in population]  # Compute fitness scores for all chromosomes
+????????best_fitness = max(fitness_scores)  # Find the fittest chromosome in the population
+????????best_chromosome = population[fitness_scores.index(best_fitness)]
+????????print(f"Generation {i+1}: Best fitness = {best_fitness}")  # Print progress
+????????print(chromosome_to_board(best_chromosome))
+????????new_population = []
+????????for j in range(pop_size):
+????????????parent1 = selection(population, tournament_size)  # Select two parents via tournament selection
+????????????parent2 = selection(population, tournament_size)
+????????????child = crossover(parent1, parent2)
+????????????child = mutation(child, mutation_rate)
+????????????new_population.append(child)
+????????population = new_population
+????best_board = chromosome_to_board(best_chromosome)
+????return best_chromosome, best_board
+
+n=int(input('Enter queen size : '))
+best_solution, best_board = genetic_algorithm(pop_size=50, n=n, tournament_size=5, mutation_rate=0.05, num_generations=100)
+
+print("Best solution found:")
+print(best_solution)
+print("Corresponding board:")
+print(best_board)
 '''
 outliers='''
 
