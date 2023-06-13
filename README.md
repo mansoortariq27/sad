@@ -178,7 +178,6 @@ for epoch in range(epochs):
         loss = np.mean(np.square(output_error))
         print(f"Epoch {epoch}, Loss: {loss:.5f}")
 '''
-
 mlpi='''
 import tensorflow as tf
 from tensorflow import keras
