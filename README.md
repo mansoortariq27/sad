@@ -1,6 +1,5 @@
 start here
 names='''
-names='''
 
  help
  outliers
