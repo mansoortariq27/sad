@@ -15,8 +15,7 @@ label='''
   #concatenate the two dataframes : df_dummies, df_numeric
   df_new = pd.concat([df_dummies, df_numeric], axis=1)
  '''
-names= 
- '''
+names= '''
  outliers,
  pca,
  one_hot,
