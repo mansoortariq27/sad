@@ -953,10 +953,7 @@ regressionS='''
   df['Symbol']=le.fit_transform(df['Symbol'])
 
   df.drop(['Name'],axis=1,inplace=True)
-
   df.head()
-
-
   Apply Linear Regression and find the error both mean absolute and mean squared error.
  
   X = df.drop('target',axis=1)
