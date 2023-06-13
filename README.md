@@ -937,8 +937,7 @@ kmeanM='''
  
 '''
 regressionS='''
-
-  Create a target column by averaging the low + high. Drop only open, close columns.
+  #Create a target column by averaging the low + high. Drop only open, close columns.
   df['target'] = (df['Low'] + df['High'])/2
   df.drop(['Open','Close'],axis=1,inplace=True)
   Preprocess the date column. Convert it into long format.
@@ -982,17 +981,14 @@ class KMeans:
         self.clusters = clusters
         #MAx Iterations
         self.iterations = iterations
-       
     def distances(self, X):
         #calculating distance
         distance = np.linalg.norm(X[:, np.newaxis] - self.centroid, axis=2)
         return distance
-   
     def centroids(self, X, labels):
         #updating centroid
         centroid = np.array([X[labels == k].mean(axis=0) for k in range(self.clusters)])
         return centroid
-
     def fit(self, X):
         self.centroid = X[np.random.choice(X.shape[0], self.clusters, replace=False)]
         iter=range(self.iterations)
@@ -1008,14 +1004,10 @@ class KMeans:
                 break
             #updating on the basis of covergence
             self.centroid = new_cntroid
-       
         self.labels_ = labels
-
   #Taking 3 clusters
-
   km = KMeans(clusters=3)
   km.fit(data_scaled)
-
   #Plot clusters
   plt.scatter(data_scaled[:, 0], data_scaled[:, 1], c=km.labels_, s=10)
   plt.scatter(km.centroid[:, 0], km.centroid[:, 1], s=100, marker='*', c='red')
@@ -1033,17 +1025,13 @@ mlp='''
 
   #Generate a random dataset for demonstration purposes
   X, y = make_classification(n_samples=100, n_features=10, n_classes=2)
-
   #Split the dataset into training and testing sets
   X_train, X_test, y_train, y_test = train_test_split(df.iloc[:, :62], df.iloc[:, -1], test_size=0.3)
-
   #Create an instance of the MLPClassifier with default parameters
   mlp = MLPClassifier()
-
   #Define some hyperparameters to tune
   hidden_layer_sizes = [(10,), (50,), (100,)]
   learning_rates = ['constant', 'invscaling', 'adaptive']
-
   #Train and evaluate the MLPClassifier on different hyperparameter combinations
   best_accuracy = 0
   best_mlp = None
@@ -1056,31 +1044,25 @@ mlp='''
           if accuracy > best_accuracy:
               best_accuracy = accuracy
               best_mlp = mlp
-
   #Predict the class labels of the test set using the best MLPClassifier
   y_pred = best_mlp.predict(X_test)
-
   #Calculate the accuracy of the classifier
   accuracy = accuracy_score(y_test, y_pred)
-
   print("Best MLPClassifier:", best_mlp)
   print("Accuracy:", accuracy)
 '''
 perceptron_learning='''
-
   #Implement OR and AND gates using perceptron learning scheme.
   #OR GAte
   #input
   X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
   #output
   Y = np.array([0, 1, 1, 1])
-
   input_len = len(X)
   w = np.array([1, 1])
   lr = 0.1
   b = 0.5
   n = 100
-
   for i in range(n):
       for j in range(input_len):
           O = np.dot(X[j], w) + b
@@ -1091,7 +1073,6 @@ perceptron_learning='''
           error = Y[j] - t
           w = w + (lr * error * X[j])
           b = b + (lr * error)
-
   #Print the new weights and bias
   print("New Weights:", w)
   print("New bias:", b)
