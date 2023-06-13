@@ -88,7 +88,7 @@ label='''
 ??df_new = pd.concat([df_dummies, df_numeric], axis=1)
 ?
 '''
-alpha-betaG='''
+betaG='''
 
 #  Tic Tac Toe Player
 ??import copy
@@ -791,7 +791,7 @@ perceptron_learning='''
 
 ?
 '''
-pre-processing='''
+processing='''
 
 ??#find the missing values
 ??df.isnull().sum()
