@@ -353,12 +353,14 @@ plt.legend()
 plt.show()
 '''
 help='''
+import re
 def give(x):
     for i in x:
         i=re.sub(r'<.*>','',i)
+        i=i.replace('&lt;','<')
+        i=i.replace('&gt;','>')
         print(i)
-       
-give(np.last['pre'].split('\n'))
+give(dt['help'].split('\n'))
 '''
 outliers='''
 
