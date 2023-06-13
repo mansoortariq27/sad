@@ -15,4 +15,22 @@ label='''
   #concatenate the two dataframes : df_dummies, df_numeric
   df_new = pd.concat([df_dummies, df_numeric], axis=1)
  '''
+names= 
+ '''
+ outliers,
+ pca,
+ one_hot,
+ label,
+ alpha-betaG,
+ perceptron_learning,
+ mlp,
+ regressionS,
+ kmeanM,
+ kmeanS,
+ bfs_dfs_visualization,
+ maze,
+ bfs,
+ dfs,
+ pre-processing
+ ''' 
 end here
